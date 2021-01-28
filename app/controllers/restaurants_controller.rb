@@ -3,7 +3,10 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    # @restaurants = Restaurant.all
+    @restaurants = policy_scope(Restaurant)
+    # at restaurant policy the scope will allow
+    # all of the restaurants to be displayed to the user
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -63,6 +66,7 @@ class RestaurantsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
       @restaurant = Restaurant.find(params[:id])
+      authorize @restaurant
     end
 
     # Only allow a list of trusted parameters through.
